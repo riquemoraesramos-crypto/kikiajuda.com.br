@@ -1,0 +1,837 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Kiki Ajuda</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+/* Layout concept: azul-cobalto sobre fundo azulado claro. Hero em duas colunas (texto + pilha de cartões de interface), faixas alternadas de claro e azul profundo, busca com filtros e grade de profissionais como elemento central. */
+:root{
+  --bg:#F4F9FF;
+  --surface:#FFFFFF;
+  --ink:#0B1D3A;
+  --muted:#4A5F80;
+  --line:#D3E3F8;
+  --blue:#1A73E8;
+  --on-blue:#FFFFFF;
+  --tint:#E4F0FF;
+  --sun:#F2A900;
+  --deep:#0A2A6B;
+  --on-deep:#FFFFFF;
+  --on-deep-muted:#B5CEF2;
+  --ok:#0E8A5F;
+  --warn:#C2410C;
+  --err:#C0392B;
+  --shadow:0 1px 2px rgba(12,26,61,.06),0 10px 30px -12px rgba(26,115,232,.25);
+  --font-display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
+  --font-body:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#07121F;--surface:#0E1B30;--ink:#E8F1FF;--muted:#9DB3D3;--line:#1F3358;
+    --blue:#6FA8FF;--on-blue:#07102A;--tint:#12284A;--sun:#FFC83D;--deep:#0D2A5E;
+    --ok:#3DD6A0;--warn:#FF9B6B;--err:#FF8A7A;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px -12px rgba(0,0,0,.6);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#07121F;--surface:#0E1B30;--ink:#E8F1FF;--muted:#9DB3D3;--line:#1F3358;
+  --blue:#6FA8FF;--on-blue:#07102A;--tint:#12284A;--sun:#FFC83D;--deep:#0D2A5E;
+  --ok:#3DD6A0;--warn:#FF9B6B;--err:#FF8A7A;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px -12px rgba(0,0,0,.6);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:16px;line-height:1.55}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:60}
+h1,h2,h3{font-family:var(--font-display);line-height:1.08;margin:0;text-wrap:balance;letter-spacing:-.02em}
+h1{font-size:clamp(2.3rem,5.6vw,4rem);font-weight:800}
+h2{font-size:clamp(1.8rem,3.6vw,2.7rem);font-weight:700}
+h3{font-size:1.2rem;font-weight:700;letter-spacing:-.01em}
+p{margin:0}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--blue);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1160px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+section{scroll-margin-top:84px}
+.band{padding-block:clamp(56px,8vw,96px)}
+.eyebrow{font-size:.78rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--blue)}
+.lead{color:var(--muted);font-size:1.1rem;max-width:58ch}
+.sec-head{display:grid;gap:12px;margin-bottom:40px;max-width:720px}
+svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:12px 22px;border-radius:999px;border:2px solid transparent;font:700 .82rem/1 var(--font-body);letter-spacing:.06em;text-transform:uppercase;text-decoration:none;cursor:pointer;transition:transform .18s,box-shadow .18s,background .18s}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{background:var(--blue);color:var(--on-blue);box-shadow:0 8px 20px -8px var(--blue)}
+.btn-ghost{background:transparent;color:var(--ink);border-color:var(--ink)}
+.btn-ghost:hover{background:var(--ink);color:var(--bg)}
+.btn-light{background:#fff;color:#0A2A6B}
+.btn-outline-light{background:transparent;color:#fff;border-color:#fff}
+.btn-outline-light:hover{background:#fff;color:#0A2A6B}
+.btn-sm{min-height:40px;padding:9px 16px;font-size:.74rem}
+
+/* header */
+.site-header{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--bg);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:68px}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--font-display);font-weight:800;font-size:1.3rem;text-decoration:none;letter-spacing:-.02em}
+.mark{width:42px;height:42px;display:grid;place-items:center;color:var(--blue)}
+.mark svg{width:100%;height:100%}
+.nav{display:flex;align-items:center;gap:18px}
+.nav a.link{font-weight:600;font-size:.9rem;text-decoration:none;color:var(--muted);white-space:nowrap}
+.nav a.link:hover{color:var(--ink)}
+.menu-btn{display:none;width:46px;height:46px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;place-items:center}
+@media (max-width:1060px){
+  .menu-btn{display:grid}
+  .nav{position:absolute;left:0;right:0;top:100%;background:var(--bg);border-bottom:1px solid var(--line);flex-direction:column;align-items:stretch;gap:0;padding:8px max(16px,env(safe-area-inset-right,0px)) 20px max(16px,env(safe-area-inset-left,0px));display:none}
+  .nav.open{display:flex}
+  .nav a.link{padding:14px 4px;border-bottom:1px solid var(--line);font-size:1.05rem}
+  .nav .btn{margin-top:14px}
+}
+
+/* hero */
+.hero{padding-block:clamp(40px,7vw,88px) clamp(48px,7vw,88px);scroll-margin-top:0}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(32px,5vw,72px);align-items:center}
+.hero-copy{display:grid;gap:22px;min-width:0}
+.hero-copy .brand-tag{display:inline-flex;align-items:center;gap:8px;width:fit-content;padding:6px 14px 6px 8px;border-radius:999px;background:var(--tint);font-weight:700;font-size:.85rem}
+.hero-copy .brand-tag b{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--blue);color:var(--on-blue);font-size:.7rem}
+.hero h1 em{font-style:normal;color:var(--blue);position:relative}
+.hero h1 em::after{content:"";position:absolute;left:0;right:0;bottom:.02em;height:.14em;background:var(--sun);border-radius:4px;z-index:-1}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px}
+.tagline{font-weight:600;color:var(--muted);font-size:.95rem}
+
+.ui-stack{display:grid;gap:14px;min-width:0}
+.ui-card{background:var(--surface);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);padding:16px;animation:float 7s ease-in-out infinite}
+.ui-card:nth-child(2){animation-delay:-1.5s}
+.ui-card:nth-child(3){animation-delay:-3s}
+.ui-card:nth-child(4){animation-delay:-4.5s}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.ui-search{display:flex;align-items:center;gap:12px;color:var(--muted)}
+.ui-search .q{flex:1;min-width:0;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ui-search .go{background:var(--blue);color:var(--on-blue);border-radius:999px;padding:8px 16px;font-weight:700;font-size:.82rem}
+.ui-pro{display:flex;align-items:center;gap:14px;margin-left:clamp(0px,4vw,44px)}
+.ui-pro .meta{flex:1;min-width:0}
+.ui-pro .name{font-weight:700}
+.ui-pro .role{color:var(--muted);font-size:.9rem}
+.score{display:inline-flex;align-items:center;gap:6px;font-weight:700;background:var(--tint);padding:6px 12px;border-radius:999px;font-size:.9rem}
+.score i{color:var(--sun);font-style:normal}
+.avatar{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font-family:var(--font-display);font-weight:800;color:#fff;flex:none}
+.ui-quote{display:flex;align-items:center;gap:12px;margin-right:clamp(0px,4vw,44px)}
+.ui-quote .ok{width:36px;height:36px;border-radius:50%;background:var(--ok);color:#fff;display:grid;place-items:center;flex:none}
+.ui-quote small{display:block;color:var(--muted)}
+.ui-tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-left:clamp(0px,2vw,24px)}
+.tile{border-radius:14px;overflow:hidden;aspect-ratio:4/3;background:var(--tint)}
+.tile svg{display:block;width:100%;height:100%}
+
+/* problema */
+.problem{background:var(--surface);border-block:1px solid var(--line)}
+.prob-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.prob{border:1px solid var(--line);background:var(--bg);border-radius:24px;padding:clamp(22px,3vw,32px);display:grid;gap:16px;align-content:start;min-width:0}
+.prob .tag-side{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-display);font-weight:700;font-size:1.3rem}
+.prob .tag-side .ic{width:44px;height:44px;border-radius:14px;background:var(--tint);color:var(--blue);display:grid;place-items:center}
+.prob ul{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.prob li{display:flex;gap:12px;align-items:flex-start}
+.prob li svg{color:var(--warn);width:20px;height:20px;margin-top:2px}
+.bridge{margin-top:20px;background:var(--deep);color:var(--on-deep);border-radius:24px;padding:clamp(22px,3vw,32px);display:flex;gap:16px;align-items:center;justify-content:center;text-align:center;font-family:var(--font-display);font-weight:700;font-size:clamp(1.2rem,2.4vw,1.7rem);line-height:1.2}
+.bridge svg{color:var(--sun);width:30px;height:30px}
+@media (max-width:760px){.prob-grid{grid-template-columns:1fr}.bridge{flex-direction:column}}
+
+/* como funciona */
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,1fr);gap:18px}
+.step{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:22px 20px 24px;display:grid;gap:12px;align-content:start;min-width:0;transition:transform .2s,box-shadow .2s}
+.step:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
+.step .top{display:flex;align-items:center;justify-content:space-between}
+.step .ic{width:52px;height:52px;border-radius:16px;background:var(--tint);color:var(--blue);display:grid;place-items:center}
+.step .ic svg{width:26px;height:26px}
+.step .n{font-family:var(--font-display);font-weight:800;font-size:2rem;line-height:1;color:var(--line)}
+.step p{color:var(--muted);font-size:.95rem}
+@media (max-width:1020px){.steps{grid-template-columns:repeat(2,1fr)}.steps .step:last-child{grid-column:1/-1}}
+@media (max-width:520px){.steps{grid-template-columns:1fr}}
+
+/* serviços */
+.services{background:var(--surface);border-block:1px solid var(--line)}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.svc{display:grid;gap:14px;align-content:space-between;padding:22px;border-radius:20px;background:var(--bg);border:1px solid var(--line);transition:transform .2s,box-shadow .2s,border-color .2s;min-width:0}
+.svc:hover{transform:translateY(-5px);box-shadow:var(--shadow);border-color:var(--blue)}
+.svc .ic{width:52px;height:52px;border-radius:16px;background:var(--tint);color:var(--blue);display:grid;place-items:center}
+.svc .ic svg{width:26px;height:26px}
+.svc p{color:var(--muted);font-size:.95rem;margin-top:6px}
+.svc .btn{width:100%}
+@media (max-width:1020px){.svc-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.svc-grid{grid-template-columns:1fr}}
+
+/* busca */
+.search-card{background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:clamp(18px,3vw,28px);box-shadow:var(--shadow);display:grid;gap:18px;margin-bottom:28px}
+.search-card h3{font-size:1.5rem}
+.search-row{display:flex;flex-wrap:wrap;gap:12px}
+.search{flex:1 1 320px;display:flex;align-items:center;gap:10px;background:var(--bg);border:1.5px solid var(--line);border-radius:999px;padding:2px 18px;color:var(--muted)}
+.search:focus-within{border-color:var(--blue)}
+.search input{flex:1;min-width:0;border:0;background:transparent;font:500 1rem var(--font-body);color:var(--ink);padding:13px 4px}
+.search input:focus{outline:none}
+.filters{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.filters .field label{font-weight:700;font-size:.82rem;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
+@media (max-width:900px){.filters{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:480px){.filters{grid-template-columns:1fr}}
+.count{color:var(--muted);font-weight:600;margin-bottom:16px}
+.pro-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.pro{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:20px;display:grid;gap:14px;align-content:start;transition:transform .2s,box-shadow .2s;min-width:0}
+.pro:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
+.pro .top{display:flex;gap:12px;align-items:center}
+.pro .role{color:var(--muted);font-size:.9rem}
+.pro blockquote{margin:0;color:var(--ink);font-size:.95rem}
+.pro .facts{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.tag{font-size:.78rem;font-weight:600;background:var(--tint);padding:4px 10px;border-radius:999px}
+.pro .actions{display:flex;flex-wrap:wrap;gap:8px}
+.pro .more{display:grid;gap:10px;border-top:1px solid var(--line);padding-top:14px}
+.pro .more .mini{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.pro .more small{color:var(--muted)}
+.empty{padding:32px;border:1.5px dashed var(--line);border-radius:20px;color:var(--muted);text-align:center;grid-column:1/-1}
+@media (max-width:1020px){.pro-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:620px){.pro-grid{grid-template-columns:1fr}}
+.demo-note{display:inline-flex;align-items:center;gap:8px;font-size:.82rem;font-weight:700;color:var(--muted);border:1.5px dashed var(--line);border-radius:999px;padding:5px 12px;width:fit-content}
+
+/* clientes x freelancers */
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.panel{border-radius:28px;padding:clamp(24px,4vw,44px);display:grid;gap:18px;align-content:start;min-width:0}
+.panel.cli{background:var(--surface);border:1px solid var(--line)}
+.panel.fre{background:var(--deep);color:var(--on-deep)}
+.panel.fre .eyebrow{color:#9DB6FF}
+.panel.fre p.lead{color:var(--on-deep-muted)}
+.ticks{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.ticks li{display:flex;gap:10px;align-items:flex-start}
+.ticks svg{width:20px;height:20px;margin-top:2px;color:var(--ok)}
+.panel.fre .ticks svg{color:var(--sun)}
+@media (max-width:860px){.duo{grid-template-columns:1fr}}
+
+/* diferencial */
+.diff-head{display:grid;gap:12px;margin-bottom:40px;max-width:720px}
+.diff-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:16px}
+.diff{grid-column:span 2;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:22px;display:grid;gap:10px;align-content:start;min-width:0;transition:transform .2s,border-color .2s}
+.diff:nth-child(n+4){grid-column:span 3}
+.diff:hover{transform:translateY(-4px);border-color:var(--blue)}
+.diff .ic{width:44px;height:44px;border-radius:14px;background:var(--tint);color:var(--blue);display:grid;place-items:center}
+.diff p{color:var(--muted)}
+@media (max-width:860px){.diff-grid{grid-template-columns:repeat(2,1fr)}.diff,.diff:nth-child(n+4){grid-column:span 1}.diff:last-child{grid-column:1/-1}}
+@media (max-width:520px){.diff-grid{grid-template-columns:1fr}.diff:last-child{grid-column:auto}}
+
+/* avaliações */
+.reviews{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.review{background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:28px;display:grid;gap:16px;align-content:start;transition:transform .2s,box-shadow .2s}
+.review:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.review .stars{color:var(--sun);letter-spacing:3px;font-size:1.15rem}
+.review q{font-family:var(--font-display);font-size:1.3rem;font-weight:600;line-height:1.3;quotes:none}
+.review .by{display:flex;align-items:center;gap:12px}
+.review .by small{display:block;color:var(--muted)}
+@media (max-width:760px){.reviews{grid-template-columns:1fr}}
+
+/* CTA */
+.cta{background:var(--deep);color:var(--on-deep);text-align:center}
+.cta .wrap{display:grid;justify-items:center;gap:20px}
+.cta p{color:var(--on-deep-muted);font-size:1.1rem;max-width:52ch}
+.cta .cta-row{justify-content:center}
+
+/* formulário */
+.form-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(28px,5vw,64px);align-items:start}
+form{background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:clamp(20px,3vw,32px);display:grid;gap:16px;box-shadow:var(--shadow)}
+.field{display:grid;gap:6px;min-width:0}
+.field label,.field legend{font-weight:700;font-size:.9rem;padding:0}
+fieldset{border:0;margin:0;padding:0;min-width:0}
+input[type=text],input[type=email],select,textarea{width:100%;font:500 1rem var(--font-body);color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:14px;padding:12px 14px}
+select{min-height:48px}
+textarea{min-height:100px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px var(--tint)}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.seg label{display:flex;align-items:center;justify-content:center;gap:8px;border:1.5px solid var(--line);border-radius:14px;padding:12px;font-weight:600;cursor:pointer;background:var(--bg)}
+.seg input{accent-color:var(--blue)}
+.seg label:has(input:checked){border-color:var(--blue);background:var(--tint)}
+.err{color:var(--err);font-size:.85rem;min-height:1em}
+.ok-box{background:var(--tint);border-radius:16px;padding:20px;display:flex;gap:14px;align-items:flex-start}
+.ok-box svg{color:var(--ok);width:28px;height:28px}
+@media (max-width:860px){.form-grid{grid-template-columns:1fr}}
+
+
+/* cadastro e portfólio */
+input[type=password],input[type=number],input[type=url]{width:100%;font:500 1rem var(--font-body);color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:14px;padding:12px 14px}
+input[type=password]:focus,input[type=number]:focus,input[type=url]:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px var(--tint)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:560px){.row2{grid-template-columns:1fr}}
+.tabs{margin-bottom:16px}
+.pw{position:relative}.pw input{padding-right:92px}
+.pw button{position:absolute;right:8px;top:50%;transform:translateY(-50%);border:0;background:var(--tint);color:var(--blue);font:700 .78rem var(--font-body);padding:7px 12px;border-radius:999px;cursor:pointer}
+.hint{color:var(--muted);font-size:.85rem}
+.drop{display:flex;align-items:center;justify-content:center;gap:10px;border:2px dashed var(--line);border-radius:16px;padding:18px;font-weight:700;color:var(--blue);cursor:pointer;background:var(--bg);text-align:center}
+.drop:hover{border-color:var(--blue)}
+.thumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.thumbs img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;border:1px solid var(--line)}
+.check{display:flex;gap:10px;align-items:flex-start;font-weight:600;font-size:.95rem}
+.check input{margin-top:4px;accent-color:var(--blue);width:18px;height:18px}
+.for-who{background:var(--tint);border-radius:14px;padding:12px 14px;font-weight:700}
+.works{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.work{border:0;padding:0;background:none;text-align:left;cursor:pointer;display:grid;gap:5px;min-width:0;font-family:inherit;color:var(--ink)}
+.work:first-child{grid-column:1/-1}
+.work .tile{display:block;border:1px solid var(--line);border-radius:12px;aspect-ratio:4/3;transition:transform .18s}
+.work:first-child .tile{aspect-ratio:16/10}
+.work:hover .tile{transform:scale(1.02)}
+.work .cap{font-size:.78rem;font-weight:600;line-height:1.25;color:var(--muted)}
+#lb{position:fixed;inset:0;z-index:100;background:rgba(7,27,69,.82);display:grid;place-items:center;padding:20px}
+#lb .box{width:min(94vw,760px);display:grid;gap:12px}
+#lb .tile{aspect-ratio:4/3;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.45)}
+#lb .t{color:#fff;font-weight:700;font-size:1.05rem;display:flex;justify-content:space-between;gap:12px;align-items:center}
+#lb button{border:0;background:#fff;color:#0B1D3A;font:800 .8rem var(--font-body);padding:9px 16px;border-radius:999px;cursor:pointer}
+
+/* rodapé */
+footer{background:var(--surface);border-top:1px solid var(--line);padding-block:48px 56px}
+.foot{display:grid;grid-template-columns:1.2fr 1fr auto;gap:32px;align-items:start}
+.foot p{color:var(--muted);margin-top:12px;max-width:36ch}
+.foot nav{display:grid;grid-template-columns:repeat(2,auto);gap:10px 32px;justify-content:start}
+.foot nav a{text-decoration:none;font-weight:600;color:var(--muted)}
+.foot nav a:hover{color:var(--blue)}
+.social{display:flex;gap:10px}
+.social a{width:46px;height:46px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;transition:background .15s,color .15s,border-color .15s}
+.social a:hover{background:var(--blue);border-color:var(--blue);color:var(--on-blue)}
+.fine{margin-top:36px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted);font-size:.85rem}
+@media (max-width:860px){.foot{grid-template-columns:1fr}}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-design" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.6 7.6"/><circle cx="11" cy="11" r="2"/></symbol>
+  <symbol id="i-photo" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></symbol>
+  <symbol id="i-edit-video" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="2.2"/><path d="M7 2v20M17 2v20M2 12h20M2 7h5M2 17h5M17 17h5M17 7h5"/></symbol>
+  <symbol id="i-video" viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></symbol>
+  <symbol id="i-pen" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></symbol>
+  <symbol id="i-trend" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 2l10 5-10 5L2 7z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></symbol>
+  <symbol id="i-hex" viewBox="0 0 24 24"><polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></symbol>
+  <symbol id="i-check-circle" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14 9 11"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><polygon points="12 2 15.1 8.6 22 9.3 16.8 14 18.2 21 12 17.5 5.8 21 7.2 14 2 9.3 8.9 8.6"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h6"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></symbol>
+  <symbol id="i-insta" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></symbol>
+  <symbol id="i-tiktok" viewBox="0 0 24 24"><path d="M9 12a4 4 0 1 0 4 4V3a5 5 0 0 0 5 5"/></symbol>
+  <symbol id="i-linkedin" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></symbol>
+  <symbol id="i-whats" viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8z"/></symbol>
+</svg>
+
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="brand" href="#inicio" aria-label="Kiki Ajuda, início">
+      <span class="mark"><svg viewBox="0 0 200 200" aria-hidden="true"><path d="M66 8H134C168 8 192 32 192 66V100C192 134 168 158 134 158H92L48 192V152C26 144 8 124 8 100V66C8 32 32 8 66 8Z" fill="currentColor"/><path d="M97.22399999999999 123.44 78.184 97.232V123.44H59.032V40.56H78.184V86.368L97.112 60.943999999999996H120.744L94.75999999999999 92.304L120.96799999999999 123.44Z" fill="var(--on-blue)"/><circle cx="148" cy="50" r="12" fill="var(--sun)"/></svg></span>
+      Kiki Ajuda
+    </a>
+    <button class="menu-btn" id="menuBtn" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav"><svg class="i"><use href="#i-menu"/></svg></button>
+    <nav class="nav" id="nav" aria-label="Principal">
+      <a class="link" href="#inicio">Início</a>
+      <a class="link" href="#como-funciona">Como funciona</a>
+      <a class="link" href="#servicos">Serviços</a>
+      <a class="link" href="#profissionais">Profissionais</a>
+      <a class="link" href="#freelancers">Para freelancers</a>
+      <a class="link" href="#sobre">Sobre</a>
+      <a class="link" href="#contato">Orçamento</a>
+      <a class="btn btn-primary btn-sm" href="#cadastro">Entrar / Cadastrar</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<!-- 2. HERO -->
+<section class="hero" id="inicio" aria-labelledby="h-hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <span class="brand-tag"><b>K</b> Kiki Ajuda · Serviços digitais</span>
+      <h1 id="h-hero">Encontre o <em>profissional digital</em> que você precisa.</h1>
+      <p class="lead">Conectamos clientes a freelancers de serviços digitais de forma simples, rápida e prática.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#profissionais">Encontrar um profissional</a>
+        <a class="btn btn-ghost" href="#freelancers">Oferecer meu serviço</a>
+      </div>
+      <p class="tagline">Design • Vídeo • Fotografia • Social Media • Marketing Digital</p>
+    </div>
+    <div class="ui-stack" aria-hidden="true">
+      <div class="ui-card ui-search"><svg class="i"><use href="#i-search"/></svg><span class="q">designer de identidade visual</span><span class="go">Buscar</span></div>
+      <div class="ui-card ui-pro">
+        <span class="avatar" style="background:#1A73E8">LM</span>
+        <div class="meta"><div class="name">Lucas Mendes</div><div class="role">Designer Gráfico</div></div>
+        <span class="score"><i>★</i> 4,9</span>
+      </div>
+      <div class="ui-card ui-tiles" id="heroTiles"></div>
+      <div class="ui-card ui-quote">
+        <span class="ok"><svg class="i"><use href="#i-check"/></svg></span>
+        <div><strong>Orçamento recebido</strong><small>R$ 480 · entrega em 5 dias</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. PROBLEMA -->
+<section class="band problem" aria-labelledby="h-prob">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">O problema</span>
+      <h2 id="h-prob">Encontrar o profissional certo nem sempre é fácil.</h2>
+    </div>
+    <div class="prob-grid">
+      <div class="prob">
+        <span class="tag-side"><span class="ic"><svg class="i"><use href="#i-search"/></svg></span>Para clientes</span>
+        <ul>
+          <li><svg class="i"><use href="#i-alert"/></svg>Dificuldade para encontrar profissionais confiáveis</li>
+          <li><svg class="i"><use href="#i-alert"/></svg>Muitas opções espalhadas em diferentes plataformas</li>
+          <li><svg class="i"><use href="#i-alert"/></svg>Dificuldade para comparar profissionais</li>
+          <li><svg class="i"><use href="#i-alert"/></svg>Falta de informações sobre portfólio e avaliações</li>
+        </ul>
+      </div>
+      <div class="prob">
+        <span class="tag-side"><span class="ic"><svg class="i"><use href="#i-pen"/></svg></span>Para freelancers</span>
+        <ul>
+          <li><svg class="i"><use href="#i-alert"/></svg>Dificuldade para conseguir novos clientes</li>
+          <li><svg class="i"><use href="#i-alert"/></svg>Pouca divulgação do próprio trabalho</li>
+          <li><svg class="i"><use href="#i-alert"/></svg>Dificuldade para encontrar novas oportunidades</li>
+          <li><svg class="i"><use href="#i-alert"/></svg>Dependência de redes sociais para conseguir demanda</li>
+        </ul>
+      </div>
+    </div>
+    <div class="bridge"><svg class="i"><use href="#i-link"/></svg>O Kiki Ajuda foi criado para aproximar esses dois públicos.</div>
+  </div>
+</section>
+
+<!-- 4. COMO FUNCIONA -->
+<section id="como-funciona" class="band" aria-labelledby="h-como">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Como funciona</span>
+      <h2 id="h-como">Da busca ao serviço entregue em cinco etapas.</h2>
+    </div>
+    <ol class="steps">
+      <li class="step"><div class="top"><span class="ic"><svg class="i"><use href="#i-grid"/></svg></span><span class="n">1</span></div><h3>Escolha o serviço</h3><p>O cliente seleciona o serviço digital que precisa.</p></li>
+      <li class="step"><div class="top"><span class="ic"><svg class="i"><use href="#i-users"/></svg></span><span class="n">2</span></div><h3>Encontre profissionais</h3><p>Visualiza profissionais disponíveis, seus perfis, portfólios e avaliações.</p></li>
+      <li class="step"><div class="top"><span class="ic"><svg class="i"><use href="#i-doc"/></svg></span><span class="n">3</span></div><h3>Solicite um orçamento</h3><p>O cliente explica o que precisa e solicita uma proposta.</p></li>
+      <li class="step"><div class="top"><span class="ic"><svg class="i"><use href="#i-check-circle"/></svg></span><span class="n">4</span></div><h3>Escolha o profissional</h3><p>Compara as propostas e escolhe o profissional que melhor atende à sua necessidade.</p></li>
+      <li class="step"><div class="top"><span class="ic"><svg class="i"><use href="#i-star"/></svg></span><span class="n">5</span></div><h3>Realize o serviço</h3><p>Cliente e freelancer combinam os detalhes, realizam o serviço e, ao final, o cliente pode avaliar o profissional.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- 5. SERVIÇOS -->
+<section id="servicos" class="band services" aria-labelledby="h-serv">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Serviços</span>
+      <h2 id="h-serv">Encontre o serviço digital que você precisa</h2>
+    </div>
+    <div class="svc-grid" id="svcGrid"></div>
+  </div>
+</section>
+
+<!-- 6 e 7. BUSCA + CARDS -->
+<section id="profissionais" class="band" aria-labelledby="h-pro">
+  <div class="wrap">
+    <div class="sec-head" style="margin-bottom:28px">
+      <span class="eyebrow">Profissionais</span>
+      <h2 id="h-pro">O que você está procurando?</h2>
+      <span class="demo-note">Busca e perfis de demonstração</span>
+    </div>
+    <form class="search-card" id="searchForm" role="search" novalidate>
+      <div class="search-row">
+        <label class="search" for="q"><svg class="i"><use href="#i-search"/></svg>
+          <input id="q" type="text" placeholder="Digite um serviço..." autocomplete="off">
+        </label>
+        <button class="btn btn-primary" type="submit">Buscar</button>
+      </div>
+      <div class="filters">
+        <div class="field"><label for="f-cat">Categoria</label><select id="f-cat"></select></div>
+        <div class="field"><label for="f-price">Preço</label>
+          <select id="f-price"><option value="">Qualquer preço</option><option value="low">Até R$ 150</option><option value="mid">R$ 150 a R$ 400</option><option value="high">Acima de R$ 400</option></select></div>
+        <div class="field"><label for="f-rate">Avaliação</label>
+          <select id="f-rate"><option value="">Qualquer nota</option><option value="4.5">4,5 ou mais</option><option value="4.8">4,8 ou mais</option></select></div>
+        <div class="field"><label for="f-exp">Experiência</label>
+          <select id="f-exp"><option value="">Qualquer tempo</option><option value="low">Até 2 anos</option><option value="mid">3 a 5 anos</option><option value="high">Mais de 5 anos</option></select></div>
+      </div>
+    </form>
+    <p class="count" id="count" aria-live="polite"></p>
+    <div class="pro-grid" id="proGrid"></div>
+  </div>
+</section>
+
+<!-- 8 e 9. CLIENTES / FREELANCERS -->
+<section class="band" style="padding-top:0" aria-label="Para clientes e freelancers">
+  <div class="wrap duo">
+    <div class="panel cli" id="clientes">
+      <span class="eyebrow">Para clientes</span>
+      <h2>Você precisa de um serviço digital?</h2>
+      <p class="lead">Encontre profissionais, compare opções e solicite orçamentos em um só lugar.</p>
+      <ul class="ticks">
+        <li><svg class="i"><use href="#i-check"/></svg>Fácil de encontrar profissionais</li>
+        <li><svg class="i"><use href="#i-check"/></svg>Portfólios para conhecer o trabalho</li>
+        <li><svg class="i"><use href="#i-check"/></svg>Avaliações de outros clientes</li>
+        <li><svg class="i"><use href="#i-check"/></svg>Solicitação de orçamento</li>
+        <li><svg class="i"><use href="#i-check"/></svg>Comunicação direta</li>
+        <li><svg class="i"><use href="#i-check"/></svg>Mais praticidade na contratação</li>
+      </ul>
+      <a class="btn btn-primary" href="#profissionais" style="width:fit-content">Encontrar profissionais</a>
+    </div>
+    <div class="panel fre" id="freelancers">
+      <span class="eyebrow">Para freelancers</span>
+      <h2>Você trabalha com serviços digitais?</h2>
+      <p class="lead">Divulgue seu trabalho, apresente seu portfólio e encontre novas oportunidades através do Kiki Ajuda.</p>
+      <ul class="ticks">
+        <li><svg class="i"><use href="#i-check"/></svg>Criar perfil profissional</li>
+        <li><svg class="i"><use href="#i-check"/></svg>Divulgar portfólio</li>
+        <li><svg class="i"><use href="#i-check"/></svg>Receber solicitações</li>
+        <li><svg class="i"><use href="#i-check"/></svg>Enviar propostas</li>
+        <li><svg class="i"><use href="#i-check"/></svg>Conseguir novos clientes</li>
+        <li><svg class="i"><use href="#i-check"/></svg>Receber avaliações</li>
+      </ul>
+      <a class="btn btn-light" href="#cadastro" data-type="Freelancer" style="width:fit-content">Cadastrar meu serviço</a>
+    </div>
+  </div>
+</section>
+
+<!-- 10. DIFERENCIAL / SOBRE -->
+<section id="sobre" class="band services" aria-labelledby="h-diff">
+  <div class="wrap">
+    <div class="diff-head">
+      <span class="eyebrow">Sobre</span>
+      <h2 id="h-diff">Por que usar o Kiki Ajuda?</h2>
+    </div>
+    <div class="diff-grid">
+      <div class="diff"><span class="ic"><svg class="i"><use href="#i-layers"/></svg></span><h3>Foco em serviços digitais</h3><p>A plataforma é especializada em profissionais da área digital.</p></div>
+      <div class="diff"><span class="ic"><svg class="i"><use href="#i-folder"/></svg></span><h3>Portfólio profissional</h3><p>O cliente pode conhecer o trabalho antes de contratar.</p></div>
+      <div class="diff"><span class="ic"><svg class="i"><use href="#i-star"/></svg></span><h3>Avaliações</h3><p>Os usuários podem avaliar os serviços realizados.</p></div>
+      <div class="diff"><span class="ic"><svg class="i"><use href="#i-doc"/></svg></span><h3>Orçamentos</h3><p>O cliente pode explicar sua necessidade e receber propostas.</p></div>
+      <div class="diff"><span class="ic"><svg class="i"><use href="#i-bolt"/></svg></span><h3>Praticidade</h3><p>Tudo fica organizado em um único ambiente.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 11. AVALIAÇÕES -->
+<section id="avaliacoes" class="band" aria-labelledby="h-rev">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Avaliações</span>
+      <h2 id="h-rev">Como as avaliações vão aparecer.</h2>
+      <span class="demo-note">Exemplos demonstrativos, não são usuários reais</span>
+    </div>
+    <div class="reviews">
+      <article class="review">
+        <div class="stars" aria-label="5 estrelas">★★★★★</div>
+        <q>Encontrei rapidamente um profissional para criar a identidade visual da minha empresa.</q>
+        <div class="by"><span class="avatar" style="background:#0E8A5F">M</span><div><strong>Mariana</strong><small>Empreendedora</small></div></div>
+      </article>
+      <article class="review">
+        <div class="stars" aria-label="5 estrelas">★★★★★</div>
+        <q>A plataforma facilita muito a divulgação do trabalho de freelancers.</q>
+        <div class="by"><span class="avatar" style="background:#0891B2">G</span><div><strong>Gabriel</strong><small>Designer</small></div></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 12. CHAMADA FINAL -->
+<section class="band cta" aria-labelledby="h-cta">
+  <div class="wrap">
+    <h2 id="h-cta">Conecte-se ao mundo dos serviços digitais.</h2>
+    <p>Encontre profissionais para seu projeto ou divulgue seu trabalho para novos clientes.</p>
+    <div class="cta-row">
+      <a class="btn btn-light" href="#profissionais">Encontrar um profissional</a>
+      <a class="btn btn-outline-light" href="#cadastro" data-type="Freelancer">Quero ser freelancer</a>
+    </div>
+  </div>
+</section>
+
+<!-- 13. CADASTRO -->
+<section id="cadastro" class="band" aria-labelledby="h-cad">
+  <div class="wrap form-grid">
+    <div class="sec-head" style="margin:0">
+      <span class="eyebrow">Cadastro</span>
+      <h2 id="h-cad">Crie a sua conta</h2>
+      <p class="lead">Escolha como você vai usar o Kiki Ajuda. Cliente cria a conta em segundos; freelancer monta o perfil e divulga o portfólio.</p>
+    </div>
+    <div>
+      <div class="seg tabs" id="tabs" role="radiogroup" aria-label="Tipo de conta">
+        <label><input type="radio" name="conta" value="Cliente" checked> Sou cliente</label>
+        <label><input type="radio" name="conta" value="Freelancer"> Sou freelancer</label>
+      </div>
+      <form id="formCliente" novalidate>
+        <div class="field"><label for="c-email">E-mail</label><input id="c-email" type="email" autocomplete="email" placeholder="voce@exemplo.com"><span class="err" id="e-c-email"></span></div>
+        <div class="field"><label for="c-senha">Crie uma senha</label><div class="pw"><input id="c-senha" type="password" autocomplete="new-password" placeholder="Mín. 6 caracteres"><button type="button" data-pw="c-senha">Mostrar</button></div><span class="err" id="e-c-senha"></span></div>
+        <button class="btn btn-primary" type="submit">Criar conta de cliente</button>
+        <p class="hint">Com a conta você encontra profissionais, compara e pede orçamentos.</p>
+      </form>
+      <form id="formFreela" hidden novalidate>
+        <div class="row2">
+          <div class="field"><label for="f-nome">Nome completo</label><input id="f-nome" type="text" autocomplete="name"><span class="err" id="e-f-nome"></span></div>
+          <div class="field"><label for="f-idade">Idade</label><input id="f-idade" type="number" min="18" max="99" inputmode="numeric" placeholder="Ex.: 24"><span class="err" id="e-f-idade"></span></div>
+        </div>
+        <div class="row2">
+          <div class="field"><label for="f-email">E-mail</label><input id="f-email" type="email" autocomplete="email"><span class="err" id="e-f-email"></span></div>
+          <div class="field"><label for="f-senha">Crie uma senha</label><div class="pw"><input id="f-senha" type="password" autocomplete="new-password" placeholder="Mín. 6 caracteres"><button type="button" data-pw="f-senha">Mostrar</button></div><span class="err" id="e-f-senha"></span></div>
+        </div>
+        <div class="row2">
+          <div class="field"><label for="f-servico">Serviço que você presta</label><select id="f-servico"></select><span class="err" id="e-f-servico"></span></div>
+          <div class="field"><label for="f-cidade">Cidade e estado</label><input id="f-cidade" type="text" placeholder="Ex.: São Paulo, SP"><span class="err" id="e-f-cidade"></span></div>
+        </div>
+        <div class="row2">
+          <div class="field"><label for="f-exp2">Tempo de experiência</label><select id="f-exp2"><option value="">Selecione</option><option>Menos de 1 ano</option><option>1 a 2 anos</option><option>3 a 5 anos</option><option>Mais de 5 anos</option></select></div>
+          <div class="field"><label for="f-valor">Valor a partir de (R$)</label><input id="f-valor" type="number" min="0" inputmode="numeric" placeholder="Ex.: 120"></div>
+        </div>
+        <div class="field"><label for="f-sobre">Sobre você</label><textarea id="f-sobre" placeholder="Conte em poucas linhas o que você faz e como trabalha."></textarea></div>
+        <div class="field"><label for="f-port">Portfólio</label>
+          <label class="drop" for="f-port"><svg class="i"><use href="#i-folder"/></svg><span id="dropTxt">Escolher imagens dos seus trabalhos</span></label>
+          <input id="f-port" type="file" accept="image/*" multiple hidden>
+          <div class="thumbs" id="thumbs"></div>
+          <span class="hint">Aceita várias imagens (JPG ou PNG). No protótipo, elas aparecem só aqui, no seu navegador.</span>
+        </div>
+        <div class="field"><label for="f-link">Link do portfólio ou Instagram (opcional)</label><input id="f-link" type="url" placeholder="https://"></div>
+        <label class="check"><input id="f-share" type="checkbox" checked> Quero compartilhar meu portfólio no meu perfil público</label>
+        <button class="btn btn-primary" type="submit">Criar perfil de freelancer</button>
+      </form>
+      <div class="ok-box" id="okCad" hidden role="status">
+        <svg class="i"><use href="#i-check-circle"/></svg>
+        <div><strong id="okCadTitle"></strong><p style="color:var(--muted)">Este é um protótipo de TCC: o cadastro é demonstrativo e nenhum dado foi guardado.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 14. ORÇAMENTO -->
+<section id="contato" class="band" aria-labelledby="h-form" style="background:var(--surface)">
+  <div class="wrap form-grid">
+    <div class="sec-head" style="margin:0">
+      <span class="eyebrow">Orçamento</span>
+      <h2 id="h-form">Peça um orçamento</h2>
+      <p class="lead">Conte o que você precisa. O profissional analisa o pedido e responde com uma proposta.</p>
+    </div>
+    <div>
+      <form id="form" novalidate>
+        <div class="for-who" id="forWho" hidden></div>
+        <div class="field"><label for="nome">Seu nome</label><input id="nome" type="text" autocomplete="name"><span class="err" id="e-nome"></span></div>
+        <div class="field"><label for="email">E-mail</label><input id="email" type="email" autocomplete="email"><span class="err" id="e-email"></span></div>
+        <div class="field"><label for="servico">Serviço que você precisa</label><select id="servico"></select></div>
+        <div class="field"><label for="msg">Descreva o que precisa</label><textarea id="msg" placeholder="Ex.: preciso de um logotipo para a minha loja."></textarea></div>
+        <button class="btn btn-primary" type="submit">Solicitar orçamento</button>
+      </form>
+      <div class="ok-box" id="okBox" hidden role="status">
+        <svg class="i"><use href="#i-check-circle"/></svg>
+        <div><strong id="okTitle"></strong><p style="color:var(--muted)">Este é um protótipo de TCC: o envio é demonstrativo e nenhum dado foi guardado.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="lb" hidden role="dialog" aria-modal="true" aria-label="Portfólio ampliado"><div class="box"><div class="t"><span id="lbT"></span><button type="button" id="lbX">Fechar</button></div><div class="tile" id="lbA"></div></div></div>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <a class="brand" href="#inicio"><span class="mark"><svg viewBox="0 0 200 200" aria-hidden="true"><path d="M66 8H134C168 8 192 32 192 66V100C192 134 168 158 134 158H92L48 192V152C26 144 8 124 8 100V66C8 32 32 8 66 8Z" fill="currentColor"/><path d="M97.22399999999999 123.44 78.184 97.232V123.44H59.032V40.56H78.184V86.368L97.112 60.943999999999996H120.744L94.75999999999999 92.304L120.96799999999999 123.44Z" fill="var(--on-blue)"/><circle cx="148" cy="50" r="12" fill="var(--sun)"/></svg></span>Kiki Ajuda</a>
+        <p>Conectando clientes e profissionais de serviços digitais.</p>
+      </div>
+      <nav aria-label="Rodapé">
+        <a href="#inicio">Início</a>
+        <a href="#como-funciona">Como funciona</a>
+        <a href="#servicos">Serviços</a>
+        <a href="#profissionais">Profissionais</a>
+        <a href="#freelancers">Para freelancers</a>
+        <a href="#contato">Contato</a>
+      </nav>
+      <div class="social">
+        <a href="#contato" aria-label="Instagram"><svg class="i"><use href="#i-insta"/></svg></a>
+        <a href="#contato" aria-label="TikTok"><svg class="i"><use href="#i-tiktok"/></svg></a>
+        <a href="#contato" aria-label="LinkedIn"><svg class="i"><use href="#i-linkedin"/></svg></a>
+        <a href="#contato" aria-label="WhatsApp"><svg class="i"><use href="#i-whats"/></svg></a>
+      </div>
+    </div>
+    <p class="fine" style="max-width:none">Projeto de TCC. Perfis, avaliações e valores exibidos nesta página são exemplos de demonstração.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var SERVICES=[
+    {id:"design",name:"Design Gráfico",icon:"i-design",desc:"Peças, banners e materiais para redes e campanhas."},
+    {id:"foto",name:"Fotografia",icon:"i-photo",desc:"Ensaios, fotos de produto e cobertura de eventos."},
+    {id:"edicao",name:"Edição de Vídeo",icon:"i-edit-video",desc:"Cortes, legendas, trilha e finalização."},
+    {id:"video",name:"Videomaker",icon:"i-video",desc:"Captação e produção de vídeos, do roteiro à entrega."},
+    {id:"social",name:"Social Media",icon:"i-share",desc:"Planejamento e gestão de perfis e postagens."},
+    {id:"conteudo",name:"Criação de Conteúdo",icon:"i-pen",desc:"Roteiros, textos e ideias para os seus canais."},
+    {id:"marketing",name:"Marketing Digital",icon:"i-trend",desc:"Anúncios, tráfego e estratégia online."},
+    {id:"identidade",name:"Identidade Visual",icon:"i-hex",desc:"Logotipo, paleta de cores e manual de marca."},
+    {id:"outros",name:"Outros Serviços Digitais",icon:"i-layers",desc:"Sites, motion design e outras demandas online."}
+  ];
+  var PROS=[
+    {n:"Lucas Mendes",i:"LM",r:"Designer Gráfico",s:"design",a:4.9,p:120,e:6,c:"#1A73E8",q:"Especialista em identidade visual e materiais para redes sociais."},
+    {n:"Camila Rocha",i:"CR",r:"Fotógrafa",s:"foto",a:4.8,p:350,e:5,c:"#C2410C",q:"Retratos e fotos de produto com iluminação natural e entrega rápida."},
+    {n:"Thiago Alves",i:"TA",r:"Editor de Vídeo",s:"edicao",a:4.9,p:150,e:4,c:"#0E7490",q:"Edição dinâmica para reels, shorts e canais no YouTube."},
+    {n:"Bianca Souza",i:"BS",r:"Videomaker",s:"video",a:4.7,p:600,e:7,c:"#0891B2",q:"Vídeos institucionais e coberturas de evento, da captação à finalização."},
+    {n:"Rafael Lima",i:"RL",r:"Social Media",s:"social",a:4.8,p:280,e:3,c:"#0E8A5F",q:"Calendário de posts e gestão de Instagram para pequenos negócios."},
+    {n:"Júlia Prado",i:"JP",r:"Criadora de Conteúdo",s:"conteudo",a:4.9,p:90,e:2,c:"#BE185D",q:"Roteiros e textos que contam a história da sua marca."},
+    {n:"Diego Martins",i:"DM",r:"Especialista em Marketing Digital",s:"marketing",a:4.7,p:450,e:6,c:"#B45309",q:"Campanhas pagas e estratégia para quem quer vender mais online."},
+    {n:"Marina Duarte",i:"MD",r:"Designer de Identidade Visual",s:"identidade",a:4.8,p:500,e:5,c:"#0A2A6B",q:"Marcas completas: logotipo, paleta, tipografia e manual de uso."},
+    {n:"Ana Beatriz Costa",i:"AC",r:"Webdesigner",s:"outros",a:4.8,p:400,e:4,c:"#334155",q:"Sites e landing pages rápidos, leves e fáceis de atualizar."}
+  ];
+  var $=function(id){return document.getElementById(id)};
+  var sname=function(id){for(var k=0;k<SERVICES.length;k++)if(SERVICES[k].id===id)return SERVICES[k].name;return ""};
+  var fmt=function(n){return String(n).replace(".",",")};
+
+  $("svcGrid").innerHTML=SERVICES.map(function(s){
+    return '<article class="svc"><div><span class="ic"><svg class="i"><use href="#'+s.icon+'"/></svg></span><h3 style="margin-top:14px">'+s.name+'</h3><p>'+s.desc+'</p></div><button class="btn btn-ghost btn-sm" type="button" data-pick="'+s.id+'">Ver profissionais</button></article>';
+  }).join("");
+
+  $("f-cat").innerHTML='<option value="">Todas as categorias</option>'+SERVICES.map(function(s){return '<option value="'+s.id+'">'+s.name+'</option>'}).join("");
+  $("f-servico").innerHTML='<option value="">Selecione o serviço</option>'+SERVICES.map(function(s){return '<option>'+s.name+'</option>'}).join("");
+  $("servico").innerHTML='<option value="">Selecione um serviço</option>'+SERVICES.map(function(s){return '<option>'+s.name+'</option>'}).join("");
+
+  var _u=0,F="Figtree,Inter,Arial,sans-serif";
+  function gr(c1,c2,vert){var id="w"+(++_u);return {d:'<linearGradient id="'+id+'" x1="0" y1="0" x2="'+(vert?0:1)+'" y2="1"><stop offset="0" stop-color="'+c1+'"/><stop offset="1" stop-color="'+c2+'"/></linearGradient>',f:"url(#"+id+")"}}
+  function bl(id,s){return '<filter id="'+id+'" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="'+s+'"/></filter>'}
+  function tx(x,y,s,w,fill,t,a){return '<text x="'+x+'" y="'+y+'" font-family="'+F+'" font-size="'+s+'" font-weight="'+w+'" fill="'+fill+'"'+(a?' text-anchor="'+a+'"':'')+'>'+t+'</text>'}
+  var K={
+  logo:function(o){var b="b"+(++_u);return '<defs>'+bl(b,2.2)+'</defs><rect width="160" height="120" fill="#ECE6DD"/><g transform="rotate(-9 80 60)"><rect x="34" y="30" width="86" height="52" rx="4" fill="'+o.c1+'"/><circle cx="52" cy="56" r="9" fill="#fff"/>'+tx(66,58,7,800,"#fff",o.n)+'</g><rect x="50" y="56" width="86" height="52" rx="4" fill="#000" opacity=".22" filter="url(#'+b+')"/><rect x="46" y="50" width="86" height="52" rx="4" fill="#fff"/><circle cx="63" cy="68" r="9" fill="'+o.c1+'"/><path d="M59 68 L63 63 L67 68 L63 74Z" fill="#fff"/>'+tx(77,67,8,800,"#222",o.n)+tx(77,75,4.2,500,"#777",o.s||"Identidade visual")+'<rect x="56" y="86" width="40" height="2" rx="1" fill="#ddd"/><rect x="56" y="91" width="30" height="2" rx="1" fill="#ddd"/><circle cx="118" cy="92" r="4" fill="'+o.c2+'"/>'},
+  social:function(o){var a=gr(o.c1,o.c2);return '<defs>'+a.d+'</defs><rect width="160" height="120" fill="#F5F6F8"/><circle cx="16" cy="14" r="7" fill="'+o.c1+'"/>'+tx(27,13,6,800,"#222","@"+o.h)+tx(27,19.5,4,500,"#888","Feed · últimas publicações")+'<rect x="8" y="28" width="46" height="46" rx="3" fill="'+a.f+'"/>'+tx(31,52,15,800,"#fff",o.big||"30%","middle")+tx(31,62,4.6,700,"#fff","DE DESCONTO","middle")+'<rect x="57" y="28" width="46" height="46" rx="3" fill="'+o.c2+'"/><circle cx="80" cy="46" r="11" fill="#fff" opacity=".9"/><rect x="66" y="62" width="28" height="3" rx="1.5" fill="#fff"/><rect x="106" y="28" width="46" height="46" rx="3" fill="#fff"/>'+tx(112,40,6,800,o.c1,"Dica da")+tx(112,48,6,800,o.c1,"semana")+'<rect x="112" y="55" width="30" height="2" rx="1" fill="#ccc"/><rect x="112" y="60" width="22" height="2" rx="1" fill="#ccc"/><rect x="8" y="77" width="46" height="36" rx="3" fill="'+o.c2+'"/><rect x="57" y="77" width="46" height="36" rx="3" fill="#222"/><rect x="106" y="77" width="46" height="36" rx="3" fill="'+a.f+'"/>'},
+  banner:function(o){var a=gr(o.c1,o.c2);return '<defs>'+a.d+'</defs><rect width="160" height="120" fill="'+a.f+'"/><circle cx="130" cy="30" r="46" fill="#fff" opacity=".1"/><circle cx="20" cy="110" r="38" fill="#fff" opacity=".08"/>'+tx(12,30,8,700,"#fff",o.a||"SUPER")+tx(12,56,25,800,"#fff",o.big||"-40%")+tx(12,70,6,600,"#fff",o.b||"em toda a loja")+'<rect x="12" y="80" width="46" height="14" rx="7" fill="#F5B301"/>'+tx(35,89.5,6,800,"#222","COMPRE","middle")+'<rect x="96" y="40" width="48" height="60" rx="6" fill="#fff" opacity=".95"/><rect x="104" y="48" width="32" height="26" rx="4" fill="'+o.c2+'"/><rect x="104" y="80" width="26" height="3" rx="1.5" fill="#bbb"/><rect x="104" y="86" width="18" height="3" rx="1.5" fill="#ddd"/>'},
+  photoP:function(o){var a=gr("#F8F4EE","#DDD2C4",1),g=gr("#fff",o.c1),b="b"+(++_u),b2="c"+(++_u);return '<defs>'+a.d+g.d+bl(b,3)+bl(b2,5)+'</defs><rect width="160" height="120" fill="'+a.f+'"/><circle cx="20" cy="22" r="16" fill="#fff" opacity=".7" filter="url(#'+b2+')"/><circle cx="140" cy="16" r="12" fill="'+o.c2+'" opacity=".35" filter="url(#'+b2+')"/><ellipse cx="82" cy="102" rx="46" ry="7" fill="#000" opacity=".28" filter="url(#'+b+')"/><rect x="104" y="64" width="22" height="38" rx="5" fill="'+o.c2+'"/><rect x="109" y="56" width="12" height="9" rx="2" fill="#2b2b2b"/><rect x="58" y="34" width="38" height="68" rx="9" fill="'+o.c1+'"/><rect x="63" y="40" width="5" height="56" rx="2.5" fill="#fff" opacity=".35"/><rect x="71" y="22" width="14" height="14" rx="2" fill="#2b2b2b"/><rect x="68" y="14" width="20" height="10" rx="3" fill="#111"/><rect x="64" y="58" width="26" height="26" rx="2" fill="#fff" opacity=".92"/>'+tx(77,69,5,800,"#333",o.n,"middle")+'<rect x="68" y="73" width="18" height="1.6" fill="#999"/><rect x="70" y="77" width="14" height="1.6" fill="#bbb"/>'},
+  photoF:function(o){var a=gr("#B98355","#7F5030"),b="b"+(++_u),b2="c"+(++_u);return '<defs>'+a.d+bl(b,2.5)+bl(b2,.6)+'</defs><rect width="160" height="120" fill="'+a.f+'"/><path d="M0 30H160M0 60H160M0 90H160" stroke="#000" stroke-opacity=".18" stroke-width="1"/><circle cx="84" cy="64" r="38" fill="#000" opacity=".3" filter="url(#'+b+')"/><circle cx="80" cy="60" r="38" fill="#F6F2EC"/><circle cx="80" cy="60" r="27" fill="#fff"/><circle cx="80" cy="60" r="22" fill="#4A2D1A"/><circle cx="80" cy="60" r="18" fill="#7B4B2A"/><path d="M80 72 C66 62 68 50 76 52 C79 53 80 56 80 56 C80 56 81 53 84 52 C92 50 94 62 80 72Z" fill="#F3E3CF" filter="url(#'+b2+')"/><rect x="116" y="56" width="26" height="4" rx="2" fill="#D8D8D8" transform="rotate(-12 129 58)"/><circle cx="26" cy="96" r="11" fill="#E8A33D"/><circle cx="26" cy="96" r="6" fill="#F6C56B"/><path d="M126 92 q10 -12 22 -4 q-6 14 -22 4z" fill="#4E7F3E"/>'},
+  photoR:function(o){var a=gr("#1E3A4A","#0E1B26",1),b="b"+(++_u),b2="c"+(++_u);return '<defs>'+a.d+bl(b,6)+bl(b2,1.2)+'</defs><rect width="160" height="120" fill="'+a.f+'"/><g filter="url(#'+b+')"><circle cx="24" cy="30" r="14" fill="#F2B15F"/><circle cx="52" cy="18" r="9" fill="#F7D794"/><circle cx="132" cy="26" r="16" fill="#E78A5C"/><circle cx="146" cy="70" r="10" fill="#F2B15F"/><circle cx="14" cy="80" r="11" fill="#9FD3E6"/></g><g filter="url(#'+b2+')"><path d="M30 120 C32 92 54 82 80 82 C106 82 128 92 130 120Z" fill="'+o.c1+'"/><path d="M68 82 L80 100 L92 82Z" fill="#f2f2f2"/><rect x="72" y="66" width="16" height="18" rx="6" fill="#C98F66"/><ellipse cx="80" cy="52" rx="17" ry="20" fill="#D9A27A"/><path d="M62 50 C60 30 100 30 98 50 C94 40 68 40 62 50Z" fill="#2A1A12"/></g>'},
+  video:function(o){var a=gr(o.c1,o.c2,1);return '<defs>'+a.d+'</defs><rect width="160" height="120" fill="'+a.f+'"/><circle cx="118" cy="38" r="14" fill="#FFE9B0" opacity=".9"/><path d="M0 92 L0 70 L14 70 L14 58 L30 58 L30 76 L44 76 L44 50 L60 50 L60 80 L80 80 L80 62 L98 62 L98 84 L120 84 L120 56 L138 56 L138 78 L160 78 L160 120 L0 120Z" fill="#0B1424" opacity=".88"/><circle cx="80" cy="56" r="15" fill="#fff" opacity=".92"/><path d="M75 48 L90 56 L75 64Z" fill="#222"/><rect x="0" y="88" width="160" height="32" fill="#000" opacity=".5"/>'+tx(8,101,7.5,800,"#fff",o.n)+tx(8,109,4.8,500,"#D6E6FF",o.s||"Produção audiovisual")+'<rect x="8" y="113" width="144" height="2" rx="1" fill="#fff" opacity=".35"/><rect x="8" y="113" width="62" height="2" rx="1" fill="#F5B301"/><rect x="128" y="94" width="26" height="9" rx="2" fill="#000" opacity=".7"/>'+tx(141,100.6,5,700,"#fff",o.d||"2:14","middle")},
+  timeline:function(o){var a=gr(o.c1,o.c2);return '<defs>'+a.d+'</defs><rect width="160" height="120" fill="#1C2030"/><rect x="8" y="8" width="84" height="50" rx="3" fill="'+a.f+'"/><path d="M8 46 Q30 30 50 44 T92 38 V58 H8Z" fill="#000" opacity=".25"/><circle cx="50" cy="33" r="7" fill="#fff" opacity=".9"/><path d="M48 29 L55 33 L48 37Z" fill="#222"/><rect x="98" y="8" width="54" height="50" rx="3" fill="#262B3F"/><rect x="104" y="16" width="30" height="3" rx="1.5" fill="#6C7498"/><rect x="104" y="24" width="40" height="3" rx="1.5" fill="#3B4263"/><rect x="104" y="32" width="24" height="3" rx="1.5" fill="#3B4263"/><rect x="104" y="40" width="36" height="3" rx="1.5" fill="#3B4263"/><rect x="8" y="66" width="144" height="12" rx="2" fill="#262B3F"/><rect x="8" y="66" width="48" height="12" rx="2" fill="'+o.c1+'"/><rect x="58" y="66" width="36" height="12" rx="2" fill="'+o.c2+'"/><rect x="96" y="66" width="56" height="12" rx="2" fill="#F5B301"/><rect x="8" y="82" width="144" height="12" rx="2" fill="#262B3F"/><rect x="20" y="82" width="70" height="12" rx="2" fill="#3FAE8A"/><rect x="92" y="82" width="40" height="12" rx="2" fill="#6B7FD6"/><rect x="8" y="98" width="144" height="10" rx="2" fill="#262B3F"/><path d="M12 102 q4 -5 8 0 t8 0 t8 0 t8 0 t8 0 t8 0 t8 0 t8 0 t8 0 t8 0 t8 0 t8 0" stroke="#8FD3B8" fill="none" stroke-width="1.4"/><rect x="72" y="62" width="1.6" height="50" fill="#FF4D4D"/><path d="M69.5 60 H76 L72.8 65Z" fill="#FF4D4D"/>'},
+  cal:function(o){var s="";for(var r=0;r<4;r++)for(var c=0;c<7;c++){var x=8+c*20.4,y=34+r*20,col=(r*7+c)%5===0?o.c1:(r*7+c)%7===3?o.c2:(r*7+c)%9===4?"#F5B301":"#fff";s+='<rect x="'+x+'" y="'+y+'" width="18.6" height="18" rx="2.5" fill="'+(col==="#fff"?"#fff":col)+'" stroke="#E2E6EE"/>'+tx(x+3,y+7,4.5,700,col==="#fff"?"#8A93A8":"#fff",String(r*7+c+1))+(col!=="#fff"?'<rect x="'+(x+3)+'" y="'+(y+10)+'" width="12" height="2" rx="1" fill="#fff" opacity=".8"/>':'')}return '<rect width="160" height="120" fill="#F4F6FA"/><rect x="0" y="0" width="160" height="26" fill="'+o.c1+'"/>'+tx(10,17,9,800,"#fff","Calendário de posts")+'<circle cx="146" cy="13" r="5" fill="#fff" opacity=".85"/>'+s},
+  blog:function(o){var a=gr(o.c1,o.c2);return '<defs>'+a.d+'</defs><rect width="160" height="120" fill="#EEF0F4"/><rect x="26" y="6" width="108" height="124" rx="4" fill="#fff"/><rect x="26" y="6" width="108" height="42" fill="'+a.f+'"/><circle cx="108" cy="22" r="12" fill="#fff" opacity=".2"/><rect x="34" y="54" width="26" height="8" rx="4" fill="'+o.c2+'" opacity=".25"/>'+tx(34,60,5,800,o.c1,o.tag||"MARKETING")+tx(34,74,8.4,800,"#1B1F2A",o.l1||"5 formas de")+tx(34,84,8.4,800,"#1B1F2A",o.l2||"contar sua história")+'<rect x="34" y="92" width="92" height="2.4" rx="1.2" fill="#C8CDD8"/><rect x="34" y="98" width="86" height="2.4" rx="1.2" fill="#C8CDD8"/><rect x="34" y="104" width="64" height="2.4" rx="1.2" fill="#C8CDD8"/>'},
+  script:function(o){return '<rect width="160" height="120" fill="#E3E5EA"/><rect x="22" y="8" width="116" height="120" rx="3" fill="#fff"/>'+tx(32,22,8,800,"#1B1F2A","ROTEIRO · "+(o.n||"Vídeo 01"))+'<rect x="32" y="27" width="96" height="1.4" fill="'+o.c1+'"/>'+tx(32,38,5,800,o.c1,"CENA 1")+tx(76,38,5,800,o.c1,"ÁUDIO")+'<rect x="32" y="42" width="38" height="14" rx="2" fill="#EEF2FA"/><rect x="76" y="42" width="52" height="2.4" rx="1.2" fill="#BFC6D4"/><rect x="76" y="48" width="44" height="2.4" rx="1.2" fill="#BFC6D4"/><rect x="76" y="54" width="50" height="2.4" rx="1.2" fill="#BFC6D4"/>'+tx(32,70,5,800,o.c1,"CENA 2")+'<rect x="32" y="74" width="38" height="14" rx="2" fill="#EEF2FA"/><rect x="76" y="74" width="48" height="2.4" rx="1.2" fill="#BFC6D4"/><rect x="76" y="80" width="52" height="2.4" rx="1.2" fill="#BFC6D4"/><rect x="76" y="86" width="36" height="2.4" rx="1.2" fill="#BFC6D4"/>'+tx(32,102,5,800,o.c1,"CENA 3")+'<rect x="32" y="106" width="38" height="12" rx="2" fill="#EEF2FA"/><rect x="76" y="106" width="44" height="2.4" rx="1.2" fill="#BFC6D4"/>'},
+  dash:function(o){var a=gr(o.c1,o.c2,1);return '<defs>'+a.d+'</defs><rect width="160" height="120" fill="#F2F5FA"/>'+[["Alcance","12,4 mil",o.c1],["Cliques","1.820",o.c2],["Vendas","+38%","#0E8A5F"]].map(function(k,i){return '<rect x="'+(8+i*49)+'" y="8" width="45" height="30" rx="4" fill="#fff"/>'+tx(13+i*49,19,4.6,600,"#7A8499",k[0])+tx(13+i*49,32,9.5,800,k[2],k[1])}).join("")+'<rect x="8" y="44" width="144" height="68" rx="4" fill="#fff"/><path d="M8 100 L8 112" stroke="#fff"/><path d="M16 98 L38 86 L58 90 L80 70 L102 76 L124 56 L144 48 V104 H16Z" fill="'+a.f+'" opacity=".25"/><path d="M16 98 L38 86 L58 90 L80 70 L102 76 L124 56 L144 48" fill="none" stroke="'+o.c1+'" stroke-width="2.2" stroke-linejoin="round"/><circle cx="144" cy="48" r="3.4" fill="'+o.c1+'"/><path d="M16 104 H144" stroke="#E2E6EE"/>'},
+  brand:function(o){return '<rect width="160" height="120" fill="#fff"/><rect x="8" y="8" width="62" height="62" rx="5" fill="'+o.c1+'"/><circle cx="39" cy="34" r="13" fill="#fff"/><path d="M33 34 L39 26 L45 34 L39 43Z" fill="'+o.c1+'"/>'+tx(39,60,7.4,800,"#fff",o.n,"middle")+'<rect x="76" y="8" width="76" height="30" rx="5" fill="#F4F6FA"/>'+tx(84,29,19,800,"#1B1F2A","Aa")+tx(120,19,5,800,"#1B1F2A","Poppins Bold")+tx(120,27,4.2,500,"#7A8499","Títulos")+'<rect x="76" y="42" width="17" height="28" rx="3" fill="'+o.c1+'"/><rect x="95" y="42" width="17" height="28" rx="3" fill="'+o.c2+'"/><rect x="114" y="42" width="17" height="28" rx="3" fill="#F5B301"/><rect x="133" y="42" width="19" height="28" rx="3" fill="#1B1F2A"/><rect x="8" y="76" width="144" height="36" rx="5" fill="#F4F6FA"/>'+tx(16,90,6,800,"#1B1F2A","Manual da marca")+'<rect x="16" y="96" width="96" height="2.4" rx="1.2" fill="#BFC6D4"/><rect x="16" y="102" width="70" height="2.4" rx="1.2" fill="#BFC6D4"/><rect x="124" y="84" width="20" height="20" rx="4" fill="'+o.c1+'"/>'},
+  web:function(o){var a=gr(o.c1,o.c2);return '<defs>'+a.d+'</defs><rect width="160" height="120" fill="#D9DFE8"/><rect x="10" y="8" width="140" height="106" rx="6" fill="#fff"/><rect x="10" y="8" width="140" height="12" rx="6" fill="#EEF1F6"/><circle cx="18" cy="14" r="2" fill="#FF6B6B"/><circle cx="25" cy="14" r="2" fill="#F5B301"/><circle cx="32" cy="14" r="2" fill="#3FAE8A"/><rect x="44" y="11" width="70" height="6" rx="3" fill="#fff"/><rect x="10" y="20" width="140" height="10" fill="#fff"/><circle cx="20" cy="25" r="3" fill="'+o.c1+'"/><rect x="100" y="23.5" width="10" height="3" rx="1.5" fill="#BFC6D4"/><rect x="114" y="23.5" width="10" height="3" rx="1.5" fill="#BFC6D4"/><rect x="128" y="22.5" width="16" height="5" rx="2.5" fill="'+o.c1+'"/><rect x="10" y="30" width="140" height="46" fill="'+a.f+'"/>'+tx(20,46,8.4,800,"#fff",o.l1||"Seu negócio")+tx(20,56,8.4,800,"#fff",o.l2||"mais perto de você")+'<rect x="20" y="62" width="30" height="8" rx="4" fill="#F5B301"/><rect x="96" y="38" width="44" height="30" rx="4" fill="#fff" opacity=".9"/><rect x="100" y="43" width="22" height="3" rx="1.5" fill="'+o.c1+'"/><rect x="100" y="50" width="34" height="2.4" rx="1.2" fill="#BFC6D4"/><rect x="100" y="56" width="28" height="2.4" rx="1.2" fill="#BFC6D4"/><rect x="18" y="82" width="38" height="26" rx="4" fill="#F2F5FA"/><rect x="61" y="82" width="38" height="26" rx="4" fill="#F2F5FA"/><rect x="104" y="82" width="38" height="26" rx="4" fill="#F2F5FA"/><circle cx="26" cy="90" r="3.4" fill="'+o.c2+'"/><circle cx="69" cy="90" r="3.4" fill="'+o.c1+'"/><circle cx="112" cy="90" r="3.4" fill="#F5B301"/>'}
+  };
+  K.reel=function(o){var a=gr(o.c1,o.c2,1);return '<defs>'+a.d+'</defs><rect width="160" height="120" fill="#14151A"/><rect x="52" y="3" width="56" height="114" rx="9" fill="#000"/><rect x="54.5" y="5.5" width="51" height="109" rx="7" fill="'+a.f+'"/><circle cx="80" cy="46" r="13" fill="#fff" opacity=".18"/><path d="M54 80 Q70 62 84 76 T106 70 V114 H54Z" fill="#000" opacity=".22"/>'+tx(80,34,9.5,800,"#fff",o.l1||"COMO","middle")+tx(80,45,9.5,800,"#F5B301",o.l2||"EDITAR","middle")+tx(80,56,9.5,800,"#fff",o.l3||"RÁPIDO","middle")+'<rect x="60" y="88" width="40" height="9" rx="4.5" fill="#fff"/>'+tx(80,94.6,4.6,800,"#111","legenda automática","middle")+'<circle cx="99" cy="64" r="3" fill="#fff"/><circle cx="99" cy="73" r="3" fill="#fff"/><circle cx="99" cy="82" r="3" fill="#fff"/><rect x="60" y="102" width="40" height="1.6" rx=".8" fill="#fff" opacity=".4"/><rect x="60" y="102" width="22" height="1.6" rx=".8" fill="#fff"/>'};
+  var WORKS={
+   design:[{k:"logo",t:"Logo e cartão · Café Aurora",c1:"#8B5E3C",c2:"#D9A066",n:"Aurora",s:"Cafeteria artesanal"},{k:"social",t:"Posts para Instagram · Studio Fit",c1:"#0E8A5F",c2:"#7BC8A4",h:"studiofit",big:"30%"},{k:"banner",t:"Banner de promoção · Loja Casa Viva",c1:"#C2410C",c2:"#F59E0B",a:"SUPER",big:"-40%",b:"em toda a loja"}],
+   foto:[{k:"photoP",t:"Fotos de produto · linha Skin",c1:"#D99BA8",c2:"#8DB8A5",n:"SKIN"},{k:"photoF",t:"Fotos para cardápio · Café Aurora"},{k:"photoR",t:"Ensaio corporativo · retrato",c1:"#2B4C7E"}],
+   edicao:[{k:"reel",t:"Reels com legendas · @viagemlenta",c1:"#0E7490",c2:"#7C3AED",l1:"VIAGEM",l2:"BARATA",l3:"EM 3 DICAS"},{k:"timeline",t:"Edição de vlog · projeto no editor",c1:"#0E7490",c2:"#7C3AED"},{k:"video",t:"Vlog de viagem · YouTube",c1:"#F59E0B",c2:"#0E7490",n:"7 dias em Lisboa",s:"Vlog · episódio 3",d:"12:48"}],
+   video:[{k:"video",t:"Vídeo institucional · Clínica Vida",c1:"#38BDF8",c2:"#0B5CAD",n:"Clínica Vida",s:"Vídeo institucional",d:"2:14"},{k:"video",t:"Cobertura de evento · Feira Tech",c1:"#7C3AED",c2:"#1E293B",n:"Feira Tech 2026",s:"Aftermovie",d:"1:32"},{k:"video",t:"Comercial · Restaurante Sabor",c1:"#F97316",c2:"#7F1D1D",n:"Restaurante Sabor",s:"Comercial de 30s",d:"0:30"}],
+   social:[{k:"cal",t:"Calendário de posts · outubro",c1:"#0E8A5F",c2:"#6366F1"},{k:"social",t:"Feed de loja de roupas",c1:"#DB2777",c2:"#F9A8D4",h:"modaviva",big:"NOVO"},{k:"social",t:"Campanha de lançamento",c1:"#0E8A5F",c2:"#34D399",h:"padariaoliva",big:"2x1"}],
+   conteudo:[{k:"blog",t:"Artigo de blog · Marketing",c1:"#BE185D",c2:"#F472B6",tag:"MARKETING",l1:"5 formas de",l2:"contar sua história"},{k:"script",t:"Roteiro de vídeo · lançamento",c1:"#BE185D",n:"Lançamento"},{k:"blog",t:"Texto para newsletter",c1:"#7C3AED",c2:"#C4B5FD",tag:"NEWSLETTER",l1:"Novidades do",l2:"mês na loja"}],
+   marketing:[{k:"dash",t:"Relatório de campanha · tráfego pago",c1:"#B45309",c2:"#F59E0B"},{k:"banner",t:"Criativo de anúncio · Meta Ads",c1:"#1D4ED8",c2:"#60A5FA",a:"OFERTA",big:"R$ 99",b:"só até domingo"},{k:"dash",t:"Painel de resultados · e-commerce",c1:"#0E8A5F",c2:"#34D399"}],
+   identidade:[{k:"brand",t:"Manual de marca · Vita Nutri",c1:"#0A2A6B",c2:"#3B82F6",n:"Vita"},{k:"logo",t:"Logotipo e papelaria · Oficina Bela",c1:"#BE185D",c2:"#F59E0B",n:"Bela",s:"Oficina de arte"},{k:"brand",t:"Identidade visual · Pet Mundo",c1:"#0E8A5F",c2:"#F59E0B",n:"Pet"}],
+   outros:[{k:"web",t:"Site institucional · Advocacia Lima",c1:"#1E3A8A",c2:"#3B82F6",l1:"Segurança",l2:"jurídica"},{k:"web",t:"Landing page · curso online",c1:"#7C3AED",c2:"#EC4899",l1:"Aprenda design",l2:"em 30 dias"},{k:"web",t:"Loja virtual · moda",c1:"#0F766E",c2:"#34D399",l1:"Nova coleção",l2:"chegou"}]
+  };
+  function art(w){return '<svg viewBox="0 0 160 120" preserveAspectRatio="xMidYMid slice" role="img" aria-label="'+w.t+'">'+K[w.k](w)+'</svg>'}
+  function works(p){var L=WORKS[p.s]||[];return '<div class="works">'+L.map(function(w,i){return '<button class="work" type="button" data-work="'+p.s+':'+i+'" aria-label="Ampliar: '+w.t+'"><span class="tile">'+art(w)+'</span><span class="cap">'+w.t+'</span></button>'}).join("")+'</div>'}
+
+  function render(){
+    var q=$("q").value.trim().toLowerCase(), cat=$("f-cat").value, pr=$("f-price").value, rt=$("f-rate").value, ex=$("f-exp").value;
+    var list=PROS.filter(function(p){
+      if(cat&&p.s!==cat)return false;
+      if(pr==="low"&&!(p.p<=150))return false;
+      if(pr==="mid"&&!(p.p>150&&p.p<=400))return false;
+      if(pr==="high"&&!(p.p>400))return false;
+      if(rt&&!(p.a>=parseFloat(rt)))return false;
+      if(ex==="low"&&!(p.e<=2))return false;
+      if(ex==="mid"&&!(p.e>=3&&p.e<=5))return false;
+      if(ex==="high"&&!(p.e>5))return false;
+      if(q){var hay=(p.n+" "+p.r+" "+sname(p.s)+" "+p.q).toLowerCase();if(hay.indexOf(q)<0)return false}
+      return true;
+    });
+    $("count").textContent=list.length===1?"1 profissional encontrado":list.length+" profissionais encontrados";
+    $("proGrid").innerHTML=list.length?list.map(function(p){
+      return '<article class="pro"><div class="top"><span class="avatar" style="background:'+p.c+'">'+p.i+'</span><div><h3 style="font-size:1.1rem">'+p.n+'</h3><div class="role">'+p.r+'</div></div></div>'+
+        '<span class="score" style="width:fit-content"><i>★★★★★</i> '+fmt(p.a)+'</span>'+
+        '<blockquote>“'+p.q+'”</blockquote>'+
+        '<div class="facts"><span class="tag">A partir de R$ '+p.p+'</span><span class="tag">'+p.e+' anos de experiência</span></div>'+
+        '<div class="actions"><button class="btn btn-ghost btn-sm" type="button" data-profile="1">Ver perfil</button><button class="btn btn-primary btn-sm" type="button" data-quote="'+p.s+'" data-who="'+p.n+' · '+p.r+'">Solicitar orçamento</button></div>'+
+        '<div class="more" hidden><small>Portfólio · projetos ilustrativos de clientes fictícios</small>'+works(p)+'</div></article>';
+    }).join(""):'<div class="empty">Nenhum profissional com esses filtros. Remova algum filtro ou escolha outra categoria.</div>';
+  }
+  render();
+
+  function go(id){var el=document.getElementById(id);if(el)el.scrollIntoView({behavior:"smooth",block:"start"})}
+  function setTab(t){var r=document.querySelectorAll('input[name="conta"]');for(var k=0;k<r.length;k++)r[k].checked=(r[k].value===t);showTab(t)}
+  function showTab(t){$("formCliente").hidden=(t!=="Cliente");$("formFreela").hidden=(t!=="Freelancer");$("okCad").hidden=true}
+
+  document.addEventListener("click",function(e){
+    var wk=e.target.closest("[data-work]");if(wk){var pr=wk.getAttribute("data-work").split(":"),w=WORKS[pr[0]][+pr[1]];$("lbT").textContent=w.t;$("lbA").innerHTML=art(w).replace("slice","meet");$("lb").hidden=false;return}
+    var el=e.target.closest("[data-pick],[data-quote],[data-type],[data-profile]");
+    if(!el)return;
+    if(el.hasAttribute("data-pick")){$("f-cat").value=el.getAttribute("data-pick");$("q").value="";render();go("profissionais");return}
+    if(el.hasAttribute("data-profile")){
+      var more=el.closest(".pro").querySelector(".more");more.hidden=!more.hidden;
+      el.textContent=more.hidden?"Ver perfil":"Fechar perfil";return}
+    if(el.hasAttribute("data-quote")){$("servico").value=sname(el.getAttribute("data-quote"));var fw=$("forWho");fw.textContent="Pedido para: "+el.getAttribute("data-who");fw.hidden=false;$("form").hidden=false;$("okBox").hidden=true;go("contato");return}
+    if(el.hasAttribute("data-type"))setTab(el.getAttribute("data-type"));
+  });
+  $("searchForm").addEventListener("submit",function(e){e.preventDefault();render()});
+  $("q").addEventListener("input",render);
+  ["f-cat","f-price","f-rate","f-exp"].forEach(function(id){$(id).addEventListener("change",render)});
+
+  var nav=$("nav"),mb=$("menuBtn");
+  function closeMenu(){nav.classList.remove("open");mb.setAttribute("aria-expanded","false");mb.setAttribute("aria-label","Abrir menu");mb.querySelector("use").setAttribute("href","#i-menu")}
+  mb.addEventListener("click",function(){
+    var open=nav.classList.toggle("open");
+    mb.setAttribute("aria-expanded",String(open));
+    mb.setAttribute("aria-label",open?"Fechar menu":"Abrir menu");
+    mb.querySelector("use").setAttribute("href",open?"#i-close":"#i-menu");
+  });
+  nav.addEventListener("click",function(e){if(e.target.closest("a"))closeMenu()});
+
+  $("form").addEventListener("submit",function(e){
+    e.preventDefault();
+    var nome=$("nome").value.trim(),mail=$("email").value.trim(),ok=true;
+    $("e-nome").textContent="";$("e-email").textContent="";
+    if(nome.length<2){$("e-nome").textContent="Informe seu nome.";ok=false}
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)){$("e-email").textContent="Informe um e-mail válido, como nome@exemplo.com.";ok=false}
+    if(!ok)return;
+    $("okTitle").textContent="Obrigado, "+nome.split(" ")[0]+". Seu pedido de orçamento foi registrado na demonstração.";
+    $("form").hidden=true;$("okBox").hidden=false;
+  });
+  /* cadastro */
+  var EM=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  function er(id,m){$(id).textContent=m||"";return !m}
+  document.querySelectorAll('input[name="conta"]').forEach(function(r){r.addEventListener("change",function(){showTab(r.value)})});
+  document.querySelectorAll("[data-pw]").forEach(function(b){b.addEventListener("click",function(){var i=$(b.getAttribute("data-pw")),h=i.type==="password";i.type=h?"text":"password";b.textContent=h?"Ocultar":"Mostrar"})});
+  $("f-port").addEventListener("change",function(){
+    var f=this.files,box=$("thumbs");box.innerHTML="";
+    for(var k=0;k<f.length&&k<8;k++){var im=document.createElement("img");im.alt="Imagem do portfólio "+(k+1);im.src=URL.createObjectURL(f[k]);box.appendChild(im)}
+    $("dropTxt").textContent=f.length?f.length+(f.length===1?" imagem selecionada":" imagens selecionadas")+" · trocar":"Escolher imagens dos seus trabalhos";
+  });
+  $("formCliente").addEventListener("submit",function(e){
+    e.preventDefault();
+    var a=er("e-c-email",EM.test($("c-email").value.trim())?"":"Informe um e-mail válido, como nome@exemplo.com.");
+    var b=er("e-c-senha",$("c-senha").value.length>=6?"":"A senha precisa ter pelo menos 6 caracteres.");
+    if(!(a&&b))return;
+    $("okCadTitle").textContent="Conta de cliente criada na demonstração. Agora é só escolher um profissional.";
+    $("formCliente").hidden=true;$("okCad").hidden=false;
+  });
+  $("formFreela").addEventListener("submit",function(e){
+    e.preventDefault();
+    var idade=parseInt($("f-idade").value,10),r=[];
+    r.push(er("e-f-nome",$("f-nome").value.trim().length>=2?"":"Informe seu nome completo."));
+    r.push(er("e-f-idade",idade>=18&&idade<=99?"":"Informe sua idade (18 anos ou mais)."));
+    r.push(er("e-f-email",EM.test($("f-email").value.trim())?"":"Informe um e-mail válido."));
+    r.push(er("e-f-senha",$("f-senha").value.length>=6?"":"A senha precisa ter pelo menos 6 caracteres."));
+    r.push(er("e-f-servico",$("f-servico").value?"":"Escolha o serviço que você presta."));
+    r.push(er("e-f-cidade",$("f-cidade").value.trim().length>=2?"":"Informe sua cidade e estado."));
+    if(r.indexOf(false)>=0)return;
+    var n=$("f-port").files.length,sh=$("f-share").checked;
+    $("okCadTitle").textContent="Perfil de "+$("f-nome").value.trim().split(" ")[0]+" criado na demonstração"+(n?(" com "+n+(n===1?" imagem":" imagens")+" de portfólio"+(sh?", compartilhadas no perfil público.":", sem compartilhar no perfil público.")):".");
+    $("formFreela").hidden=true;$("okCad").hidden=false;
+  });
+  function closeLb(){$("lb").hidden=true}
+  $("lbX").addEventListener("click",closeLb);$("lb").addEventListener("click",function(e){if(e.target===$("lb"))closeLb()});
+  document.addEventListener("keydown",function(e){if(e.key==="Escape")closeLb()});
+  /* vitrine da página inicial */
+  $("heroTiles").innerHTML=WORKS.design.map(function(w){return '<div class="tile">'+art(w)+'</div>'}).join("");
+})();
+</script>
+
+</body></html>
